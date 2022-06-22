@@ -20,10 +20,10 @@ def pull_tos():
     
     headers = BeautifulSoup(content, 'html.parser').find_all('div', role = "article")
     paragraphs = BeautifulSoup(content, 'html.parser').find_all('p')
-    for h in headers:
-        print(h.get_text("\n", strip = True))
-        for p in paragraphs:
-            print(p.get_text("\n",strip = True))
+    tos = ""
+    for p in paragraphs:
+        tos += p.get_text("\n",strip = True)
+    return tos
 
 def test():
     url = input("Please enter url: ")
