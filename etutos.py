@@ -1,5 +1,6 @@
 from bs4 import BeautifulSoup
 import requests
+
 def intro_message():
     message = "Welcome to ETOTUS (Easy to Understand Terms of Service)! This tool is in active development, so please submit all issues or comments to the github repository at https://github.com/micsport13/etutos/issues. \n"
     print(message)
@@ -25,6 +26,11 @@ def pull_tos():
         tos += p.get_text("\n",strip = True)
     return tos
 
+def tos_parser(tos):
+    tos = str(tos)
+    if tos.find("legal guardian")>= 0 or tos.find("parent")>=0:
+        print("FIXME: Add what requirements for parental or guardian consent")
+
 def test():
     url = input("Please enter url: ")
     content = requests.get(url).content
@@ -37,5 +43,5 @@ def test():
     
 
 intro_message()
-print(pull_tos())
+tos_parser(pull_tos())
 
