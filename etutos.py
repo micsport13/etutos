@@ -13,10 +13,10 @@ def intro_message():
 
 def pull_tos(url):
     title = re.search("[a-z]*(?=.com)", url).group(0).upper()
-    content = requests.get(url).content
+    request = requests.get(url, timeout = 15)
+    content = request.content
     try:
-        test = requests.get(url)
-        test.raise_for_status()
+        request.raise_for_status()
     except requests.exceptions.ConnectionError:
         print("A connection error occurred, please check your internet")
         return 1
@@ -41,20 +41,19 @@ def tos_parser(tos: str):
 
 
 def input_url():
-    url = input("Please enter url: ")
-    if url.find("https://") == -1 and url.find("https://") == -1:
-        print("Please input a valid URL.")
-        input_url()
-    if url.find("terms") == -1:
-        print("Are you sure this is the address of the terms of service?")
-        response = input("Y or N: ")
-        if response.upper() == "Y":
+    while True:
+        url: str = input("Please enter url: ")
+        if url.find("https://") == -1 and url.find("https://") == -1:
+            print("Please input a valid URL.")
+        if url.find("terms") == -1:
+            print("Are you sure this is the address of the terms of service?")
+            response = input("Y or N: ")
+            if response.upper() == "Y":
+                return url
+            elif response.upper() == "N":
+                print("Please input a valid terms of service page: ")
+        else:
             return url
-        elif response.upper() == "N":
-            print("Please input a valid terms of service page: ")
-            input_url()
-    else:
-        return url
 
 
 intro_message()
