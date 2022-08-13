@@ -26,8 +26,7 @@ def pull_tos():
         tos += p.get_text("\n",strip = True)
     return tos
 
-def tos_parser(tos):
-    tos = str(tos)
+def tos_parser(tos: str):
     if tos.find("legal guardian")>= 0 or tos.find("parent")>=0:
         print("FIXME: Add what requirements for parental or guardian consent")
 
